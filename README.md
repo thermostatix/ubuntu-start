@@ -3,6 +3,7 @@
 ## Usage:
 
 $ chmod +x installs.sh
+
 $ sudo ./installs.sh
 
 Have fun.
