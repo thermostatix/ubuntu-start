@@ -172,3 +172,15 @@ else
 	sudo apt install openvpn
 	echo Hoping the install worked!
 fi
+
+echo Install TeamViewer? y/n
+read teamviewer
+
+if [ $teamviewer != y ]
+then
+	echo not installing teamviewer
+else
+	wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
+	sudo apt install ./teamviewer_amd64.deb
+fi
+
