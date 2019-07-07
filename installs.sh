@@ -194,3 +194,16 @@ else
 	sudo snap install kubectl --classic
 	echo hopefully succeeded installing kubectl. If not, sorry...
 fi
+
+echo Install Minikube? y/n
+read minikube
+
+if [ $minikube != y ]
+then
+	echo not installing minikube
+else
+	curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+	chmod +x minikube
+	sudo install minikube /usr/local/bin
+fi
+
