@@ -184,3 +184,13 @@ else
 	sudo apt install ./teamviewer_amd64.deb
 fi
 
+echo Install Kubectl? y/n
+read kubectl
+
+if [ $kubectl != y ]
+then
+	echo not installing kubectl
+else
+	sudo snap install kubectl --classic
+	echo hopefully succeeded installing kubectl. If not, sorry...
+fi
