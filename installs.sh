@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #Remove need to input passwords all the time
 echo Are you logged in as sudo? y/n
 read sudoer
@@ -32,9 +34,9 @@ echo If the above line is not \"Hello World!\", please go to https://docs.snapcr
 echo please hit any key to continue, or Ctrl-C to exit
 read go
 
+# INSTALL GIT
 echo Install Git?
 read git_install
-
 if [ $git_install != y ]
 then
 	echo not installing git
@@ -42,10 +44,9 @@ else
 	 sudo apt-get install git
  fi
 
-# Install Vim
+# INSTALL VIM
 echo Install Vim? y/n
 read install_vim
-
 if [ $install_vim != y ]
 then
 	echo Not installing Vim
@@ -54,10 +55,9 @@ else
 	echo If that didn\'t work, sorry...
 fi
 
-# Install Zoom
+# INSTALL ZOOM
 echo Install Zoom? y/n
 read install_zoom
-
 if [ $install_zoom != y ]
 then
 	echo Not installing Zoom
@@ -68,9 +68,9 @@ else
 	echo If that didn\'t work, sorry...
 fi
 
+# INSTALL GOOGLE CHROME
 echo Install Google Chrome?
 read install_chrome
-
 if [ $install_chrome != y ]
 then
 	echo Not installing Chrome
@@ -88,9 +88,9 @@ else
 	echo If that didn\'t work, sorry...
 fi
 
+# INSTALL SLACK
 echo Install Slack?
 read install_slack
-
 if [ $install_slack != y ]
 then
 	echo not installing Slack.
@@ -99,25 +99,26 @@ else
 	sudo snap install slack --classic
 fi
 
-# Install PyCharm
-echo Install PyCharm Professional or Community?
-echo Choose P or C \(Capital Letters!\), or hit any other key to skip Pycharm installation
-read install_pycharm
-
-if [ $install_pycharm != P ]
+# INSTALL PYCHARM
+echo
+echo \##########################################
+echo Install PyCharm Professional \(p\), Community \(c\) or skip \(n\)?
+read pycharm
+if [ $pycharm == c ]
 then
-	if [ $install_pycharm != C ]
-	then
-		echo not installing Pycharm.
-	else
-		sudo snap install pycharm-community --classic
-	fi
-else
+	sudo snap install pycharm-community --classic
+	echo hoping PyCharm is now installed?
+elif [ $pycharm == p ]
+then 
 	sudo snap install pycharm-professional --classic
 	echo hoping PyCharm is now installed?
+else
+	echo not installing pycharm
 fi
 
-#Install Docker
+# INSTALL DOCKER
+echo Install Docker?
+read docker
 if [ $docker != y ]
 then
 	echo not installing docker now
@@ -159,12 +160,11 @@ else
 			sudo usermod -aG docker $USER
 	fi
 fi
+fi
 
-
-
+# INSTALL OPENVPN
 echo Install OpenVPN? y/n
 read openvpn
-
 if [ $openvpn != y ]
 then
 	echo not installing openvpn
@@ -173,9 +173,9 @@ else
 	echo Hoping the install worked!
 fi
 
+# INSTALL TEAMVIEWER
 echo Install TeamViewer? y/n
 read teamviewer
-
 if [ $teamviewer != y ]
 then
 	echo not installing teamviewer
@@ -184,9 +184,9 @@ else
 	sudo apt install ./teamviewer_amd64.deb
 fi
 
+# INSTALL KUBECTL
 echo Install Kubectl? y/n
 read kubectl
-
 if [ $kubectl != y ]
 then
 	echo not installing kubectl
@@ -195,9 +195,9 @@ else
 	echo hopefully succeeded installing kubectl. If not, sorry...
 fi
 
+# INSTALL MINIKUBE
 echo Install Minikube? y/n
 read minikube
-
 if [ $minikube != y ]
 then
 	echo not installing minikube
@@ -206,4 +206,59 @@ else
 	chmod +x minikube
 	sudo install minikube /usr/local/bin
 fi
+
+# INSTALL HELM
+echo Install Helm? y/n
+read helm
+if [ $helm != y ]
+then
+	echo not installing helm
+else
+	curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+fi
+
+# INSTALL PIP
+echo Install pip3?
+read pip
+if [ $pip != y ]
+then
+	echo not installing pip3
+else
+	sudo apt install python3-pip
+	echo pip=\"pip3\" >> testfile #~/.bash_aliases
+fi
+
+# INSTALL ANSIBLE
+echo Install ansible?
+read ansible
+if [ $ansible != y ]
+then
+	echo not installing ansible
+else
+	sudo apt-add-repository --yes --update ppa:ansible/ansible 
+	sudo apt-get install ansible
+
+	echo hopefully installed ansible
+fi
+
+# INSTALL BLUEMAN
+echo Install Bluetooth Manager\)? y/n
+read blueman
+if [ $blueman != y ]
+then
+	echo not installing blueman
+else
+	sudo apt-get install blueman
+fi
+
+# INSTALL SAMBA CLIENT
+echo Install Samba Client for accessing samba shared drive? y/n
+read samba
+if [ $samba != y ]
+then
+	echo not installing samba
+else
+	sudo apt install smbclient
+fi
+
 
