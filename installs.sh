@@ -1,6 +1,19 @@
 #!/bin/bash
 
 #Remove need to input passwords all the time
+if [[ -z "$1" || $1 != -m && $1 != -a && $1 != -k ]]
+then
+	echo usage: sudo ./installs.sh OPTION [--no-pycharm]
+	echo
+	echo OPTION:
+	echo -m : manually confirm each step
+	echo -a : all at once
+	echo -k : kubernetes etc included
+	echo
+
+	exit
+fi
+
 echo Are you logged in as sudo? y/n
 read sudoer
 if [ $sudoer != y ]
@@ -8,14 +21,35 @@ then
 	echo
 	echo "##########################"
 	echo Run this script as follows:
-	echo $ sudo chmod +x installs.sh
-	echo $ sudo ./installs.sh
+	echo $ chmod +x installs.sh
+	echo $ sudo ./installs.sh \[OPTION\]
 	echo "##########################"
 	echo
-	sudo chmod +x installs.sh
-	sudo ./installs.sh
-	return
+	exit
 fi
+go=y
+git_install=y
+install_vim=y
+install_zoom=y
+install_chrome=y
+install_slack=y
+pycharm=y
+docker=y
+hello_docker=y
+no_sudo=y
+openvpn=y
+teamviewer=y
+kubectl=y
+minikube=y
+helm=y
+pip=y
+ansible=y
+blueman=y
+samba=y
+
+# Update & Upgrade
+sudo apt-get update
+sudo apt-get upgrade
 
 #Install a nice tool for tweaking your desktop
 sudo add-apt-repository universe
@@ -32,11 +66,17 @@ hello-world
 
 echo If the above line is not \"Hello World!\", please go to https://docs.snapcraft.io/installing-snap-on-ubuntu. Sorry about that...
 echo please hit any key to continue, or Ctrl-C to exit
-read go
+if [ $1 != -a ]
+then
+	read go
+fi
 
 # INSTALL GIT
 echo Install Git?
-read git_install
+if [ $1 != -a ]
+then
+	read git_install
+fi
 if [ $git_install != y ]
 then
 	echo not installing git
@@ -46,7 +86,10 @@ else
 
 # INSTALL VIM
 echo Install Vim? y/n
-read install_vim
+if [ $1 != -a ]
+then
+	read install_vim
+fi
 if [ $install_vim != y ]
 then
 	echo Not installing Vim
@@ -57,7 +100,10 @@ fi
 
 # INSTALL ZOOM
 echo Install Zoom? y/n
-read install_zoom
+if [ $1 != -a ]
+then
+	read install_zoom
+fi
 if [ $install_zoom != y ]
 then
 	echo Not installing Zoom
@@ -70,7 +116,10 @@ fi
 
 # INSTALL GOOGLE CHROME
 echo Install Google Chrome?
-read install_chrome
+if [ $1 != -a ]
+then
+	read install_chrome
+fi
 if [ $install_chrome != y ]
 then
 	echo Not installing Chrome
@@ -90,7 +139,10 @@ fi
 
 # INSTALL SLACK
 echo Install Slack?
-read install_slack
+if [ $1 != -a ]
+then
+	read install_slack
+fi
 if [ $install_slack != y ]
 then
 	echo not installing Slack.
@@ -100,25 +152,36 @@ else
 fi
 
 # INSTALL PYCHARM
-echo
-echo \##########################################
-echo Install PyCharm Professional \(p\), Community \(c\) or skip \(n\)?
-read pycharm
-if [ $pycharm == c ]
+if [[ $2 == --no-pycharm ]]
 then
-	sudo snap install pycharm-community --classic
-	echo hoping PyCharm is now installed?
-elif [ $pycharm == p ]
-then 
-	sudo snap install pycharm-professional --classic
-	echo hoping PyCharm is now installed?
+	echo
+	echo \##########################################
+	echo Install PyCharm Professional \(p\), Community \(c\) or skip \(n\)?
+	if [ $1 != -a ]
+	then
+		read pycharm
+	fi
+	if [ $pycharm == c ]
+	then
+		sudo snap install pycharm-community --classic
+		echo hoping PyCharm is now installed?
+	elif [ $pycharm == p ]
+	then 
+		sudo snap install pycharm-professional --classic
+		echo hoping PyCharm is now installed?
+	else
+		echo not installing pycharm
+	fi
 else
-	echo not installing pycharm
+	echo skipping pycharm
 fi
 
 # INSTALL DOCKER
 echo Install Docker?
-read docker
+if [ $1 != -a ]
+then
+	read docker
+fi
 if [ $docker != y ]
 then
 	echo not installing docker now
@@ -142,7 +205,10 @@ else
 		#Install Docker
 		sudo apt-get install docker-ce docker-ce-cli containerd.io
 		echo Run Hello World container? y/n
-		read hello_docker
+		if [ $1 != -a ]
+		then
+			read hello_docker
+		fi
 		if [[ $hello_docker != y ]]
 		then
 			echo cool
@@ -151,7 +217,10 @@ else
 			echo Now go to https://docs.docker.com/install/linux/linux-postinstall/ for post-installation steps
 		fi
 		echo Or you could try to automate that too?
-		read no_sudo
+		if [ $1 != -a ]
+		then
+			read no_sudo
+		fi
 		if [[ $no_sudo != y ]]
 		then
 			echo OK
@@ -164,7 +233,10 @@ fi
 
 # INSTALL OPENVPN
 echo Install OpenVPN? y/n
-read openvpn
+if [ $1 != -a ]
+then
+	read openvpn
+fi
 if [ $openvpn != y ]
 then
 	echo not installing openvpn
@@ -175,7 +247,10 @@ fi
 
 # INSTALL TEAMVIEWER
 echo Install TeamViewer? y/n
-read teamviewer
+if [ $1 != -a ]
+then
+	read teamviewer
+fi
 if [ $teamviewer != y ]
 then
 	echo not installing teamviewer
@@ -184,42 +259,12 @@ else
 	sudo apt install ./teamviewer_amd64.deb
 fi
 
-# INSTALL KUBECTL
-echo Install Kubectl? y/n
-read kubectl
-if [ $kubectl != y ]
-then
-	echo not installing kubectl
-else
-	sudo snap install kubectl --classic
-	echo hopefully succeeded installing kubectl. If not, sorry...
-fi
-
-# INSTALL MINIKUBE
-echo Install Minikube? y/n
-read minikube
-if [ $minikube != y ]
-then
-	echo not installing minikube
-else
-	curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-	chmod +x minikube
-	sudo install minikube /usr/local/bin
-fi
-
-# INSTALL HELM
-echo Install Helm? y/n
-read helm
-if [ $helm != y ]
-then
-	echo not installing helm
-else
-	curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
-fi
-
 # INSTALL PIP
 echo Install pip3?
-read pip
+if [ $1 != -a ]
+then
+	read pip
+fi
 if [ $pip != y ]
 then
 	echo not installing pip3
@@ -230,7 +275,10 @@ fi
 
 # INSTALL ANSIBLE
 echo Install ansible?
-read ansible
+if [ $1 != -a ]
+then
+	read ansible
+fi
 if [ $ansible != y ]
 then
 	echo not installing ansible
@@ -243,7 +291,10 @@ fi
 
 # INSTALL BLUEMAN
 echo Install Bluetooth Manager\)? y/n
-read blueman
+if [ $1 != -a ]
+then
+	read blueman
+fi
 if [ $blueman != y ]
 then
 	echo not installing blueman
@@ -253,7 +304,10 @@ fi
 
 # INSTALL SAMBA CLIENT
 echo Install Samba Client for accessing samba shared drive? y/n
-read samba
+if [ $1 != -a ]
+then
+	read samba
+fi
 if [ $samba != y ]
 then
 	echo not installing samba
@@ -261,4 +315,47 @@ else
 	sudo apt install smbclient
 fi
 
+if [ $1 == -k ]
+then
+	# INSTALL KUBECTL
+	echo Install Kubectl? y/n
+	if [ $1 != -a ]
+	then
+		read kubectl
+	fi
+	if [ $kubectl != y ]
+	then
+		echo not installing kubectl
+	else
+		sudo snap install kubectl --classic
+		echo hopefully succeeded installing kubectl. If not, sorry...
+	fi
 
+	# INSTALL MINIKUBE
+	echo Install Minikube? y/n
+	if [ $1 != -a ]
+	then
+		read minikube
+	fi
+	if [ $minikube != y ]
+	then
+		echo not installing minikube
+	else
+		curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+		chmod +x minikube
+		sudo install minikube /usr/local/bin
+	fi
+
+	# INSTALL HELM
+	echo Install Helm? y/n
+	if [ $1 != -a ]
+	then
+		read helm
+	fi
+	if [ $helm != y ]
+	then
+		echo not installing helm
+	else
+		curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+	fi
+fi
