@@ -37,6 +37,22 @@ Bluetooth Manager
 
     sudo apt-get install blueman
 
+Add the following to the beginning of /etc/bluetooth/main.conf:
+
+.. code-block:: bash
+
+    [General]
+    Disable=headset
+    Disable=handsfree
+    
+    # Automatically connect both A2DP and HFP/HSP profiles for incoming
+    # connections. Some headsets that support both profiles will only connect the
+    # other one automatically so the default setting of true is usually a good
+    # idea.
+    AutoConnect=true
+
+
+
 Chrome
 ------
 .. code-block:: bash
@@ -128,3 +144,5 @@ After creating id_rsa you need to add it:
     sudo apt install p7zip-full p7zip-rar
     # usage:
     7z e file.7z
+
+
