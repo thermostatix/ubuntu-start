@@ -140,6 +140,16 @@ sudo apt-get install ansible
 </pre></div>
 </div>
 </div>
+<div class="section" id="ssh">
+<h2>SSH<a class="headerlink" href="#ssh" title="Permalink to this headline">¶</a></h2>
+<p>After creating id_rsa you need to add it:
+.. code-block:: bash</p>
+<blockquote>
+<div><p>ssh-keygen -t rsa -b 4096 -C “<a class="reference external" href="mailto:thermostatix&#37;&#52;&#48;gmail&#46;com">thermostatix<span>&#64;</span>gmail<span>&#46;</span>com</a>”
+# let’s say you created id_rsa, now add it to SSH
+ssh-add ~/.ssh/id_rsa</p>
+</div></blockquote>
+</div>
 </div>
 
 

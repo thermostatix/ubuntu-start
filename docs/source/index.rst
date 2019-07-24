@@ -111,3 +111,11 @@ Helm
 
     curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 
+SSH
+---
+After creating id_rsa you need to add it:
+.. code-block:: bash
+
+        ssh-keygen -t rsa -b 4096 -C "thermostatix@gmail.com"
+        # let's say you created id_rsa, now add it to SSH
+        ssh-add ~/.ssh/id_rsa
