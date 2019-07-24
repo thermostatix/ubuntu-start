@@ -119,6 +119,7 @@ After creating id_rsa you need to add it:
 
     ssh-keygen -t rsa -b 4096 -C "email@example.com"
     # let's say you created id_rsa, now add it to SSH
+    eval "$(ssh-agent -s)"
     ssh-add ~/.ssh/id_rsa
 
 7z Archiver
