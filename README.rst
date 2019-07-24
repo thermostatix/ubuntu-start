@@ -15,6 +15,8 @@ Gnome Tweaks and Tools
 .. code-block:: bash
 
     sudo apt install tree
+    gsettings set org.gnome.desktop.wm.preferences button-layout 'close,maximize,minimize:'
+    
 
 Git & Vim
 ---------
