@@ -100,6 +100,7 @@ MultiProfile = multiple
 AutoEnable=true
 " >> /etc/bluetooth.main.conf
 
+sudo mv ~/.bashrc ~/.bashrc_bu
 sudo echo "
 # User Defined
 . ~/.bash_profile
@@ -117,8 +118,13 @@ alias vb=\"vim ~/.bash_profile\"
 alias ignore=\"sudo vim ~/.gitignore_global\"
 alias gs=\"git status\"
 alias gl=\"git log\"
-alias gc=\"git commit -m \"
+alias gcm=\"git commit -m \"
 alias ga=\"git add \" 
+alias gp=\"git push\"
+
+#SSH Agent Startup at Login
+eval "$(ssh-agent -s)"
+
 " >> ~/.bash_profile
 
 

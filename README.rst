@@ -1,237 +1,148 @@
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta charset="utf-8" />
-    <title>Ubuntu Provisioner &#8212; Ubuntu Startup 0.1 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
-
-          <div class="body" role="main">
-            
-  <div class="section" id="ubuntu-provisioner">
-<h1>Ubuntu Provisioner<a class="headerlink" href="#ubuntu-provisioner" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="update">
-<h2>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get update
-sudo apt-get upgrade
-</pre></div>
-</div>
-</div>
-<div class="section" id="gnome-tweaks-and-tools">
-<h2>Gnome Tweaks and Tools<a class="headerlink" href="#gnome-tweaks-and-tools" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install tree
-</pre></div>
-</div>
-</div>
-<div class="section" id="git-vim">
-<h2>Git &amp; Vim<a class="headerlink" href="#git-vim" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install git
-sudo apt install vim
-</pre></div>
-</div>
-</div>
-<div class="section" id="zoom">
-<h2>Zoom<a class="headerlink" href="#zoom" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget https://zoom.us/client/latest/zoom_amd64.deb
-sudo dpkg -i zoom_amd64.deb
-sudo apt-get -f install
-</pre></div>
-</div>
-</div>
-<div class="section" id="bluetooth-manager">
-<h2>Bluetooth Manager<a class="headerlink" href="#bluetooth-manager" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install blueman
-</pre></div>
-</div>
-<p>Add the following to the beginning of /etc/bluetooth/main.conf:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>General<span class="o">]</span>
-<span class="nv">Disable</span><span class="o">=</span>headset
-<span class="nv">Disable</span><span class="o">=</span>handsfree
-
-<span class="c1"># Automatically connect both A2DP and HFP/HSP profiles for incoming</span>
-<span class="c1"># connections. Some headsets that support both profiles will only connect the</span>
-<span class="c1"># other one automatically so the default setting of true is usually a good</span>
-<span class="c1"># idea.</span>
-<span class="nv">AutoConnect</span><span class="o">=</span><span class="nb">true</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="chrome">
-<h2>Chrome<a class="headerlink" href="#chrome" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install libxss1 libappindicator1 libindicator7
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo apt install ./google-chrome*.deb
-</pre></div>
-</div>
-</div>
-<div class="section" id="slack">
-<h2>Slack<a class="headerlink" href="#slack" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo snap install slack --classic
-</pre></div>
-</div>
-</div>
-<div class="section" id="docker">
-<h2>Docker<a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get update
-sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg <span class="p">|</span> sudo apt-key add -
-<span class="k">if</span> ! <span class="o">[[</span> <span class="k">$(</span>sudo apt-key fingerprint 0EBFCD88<span class="k">)</span> <span class="o">]]</span>
-<span class="k">then</span>
-        <span class="nb">echo</span> There seems to be a problem with the fingerprint - go to https://docs.docker.com/install/linux/docker-ce/ubuntu/
-<span class="k">else</span>
-        sudo add-apt-repository <span class="s2">&quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu </span><span class="k">$(</span>lsb_release -cs<span class="k">)</span><span class="s2"> stable&quot;</span>
-<span class="k">fi</span>
-
-sudo apt-get install docker-ce docker-ce-cli containerd.io
-sudo groupadd docker
-sudo usermod -aG docker <span class="nv">$USER</span>
-
-<span class="c1"># Run test</span>
-docker run hello-world
-</pre></div>
-</div>
-</div>
-<div class="section" id="openvpn">
-<h2>OpenVPN<a class="headerlink" href="#openvpn" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install openvpn
-</pre></div>
-</div>
-</div>
-<div class="section" id="teamviewer">
-<h2>TeamViewer<a class="headerlink" href="#teamviewer" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
-sudo apt install ./teamviewer_amd64.deb
-</pre></div>
-</div>
-</div>
-<div class="section" id="pip">
-<h2>Pip<a class="headerlink" href="#pip" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install python3-pip
-<span class="nb">echo</span> <span class="nb">alias</span> <span class="nv">pip</span><span class="o">=</span><span class="se">\&quot;</span>pip3<span class="se">\&quot;</span> &gt;&gt; ~/.bash_aliases
-</pre></div>
-</div>
-</div>
-<div class="section" id="ansible">
-<h2>Ansible<a class="headerlink" href="#ansible" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-add-repository --yes --update ppa:ansible/ansible
-sudo apt-get install ansible
-</pre></div>
-</div>
-</div>
-<div class="section" id="samba-client">
-<h2>Samba Client<a class="headerlink" href="#samba-client" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install smbclient
-</pre></div>
-</div>
-</div>
-<div class="section" id="helm">
-<h2>Helm<a class="headerlink" href="#helm" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get <span class="p">|</span> bash
-</pre></div>
-</div>
-</div>
-<div class="section" id="ssh">
-<h2>SSH<a class="headerlink" href="#ssh" title="Permalink to this headline">¶</a></h2>
-<p>After creating id_rsa you need to add it:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh-keygen -t rsa -b <span class="m">4096</span> -C <span class="s2">&quot;email@example.com&quot;</span>
-<span class="c1"># let&#39;s say you created id_rsa, now add it to SSH</span>
-ssh-add ~/.ssh/id_rsa
-</pre></div>
-</div>
-</div>
-<div class="section" id="z-archiver">
-<h2>7z Archiver<a class="headerlink" href="#z-archiver" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install p7zip-full p7zip-rar
-<span class="c1"># usage:</span>
-7z e file.7z
-</pre></div>
-</div>
-</div>
-</div>
+Ubuntu Provisioner
+==================
 
 
-          </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="#">Ubuntu Startup</a></h1>
+Update
+------
+.. code-block:: bash
 
+    sudo apt-get update
+    sudo apt-get upgrade
 
+Gnome Tweaks and Tools
+----------------------
+.. code-block:: bash
 
+    sudo apt install tree
 
+Git & Vim
+---------
+.. code-block:: bash
 
+    sudo apt-get install git
+    sudo apt install vim
 
+Zoom
+----
+.. code-block:: bash
 
+    wget https://zoom.us/client/latest/zoom_amd64.deb
+    sudo dpkg -i zoom_amd64.deb
+    sudo apt-get -f install
 
-<h3>Navigation</h3>
+Bluetooth Manager
+-----------------
+.. code-block:: bash
 
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="#">Documentation overview</a><ul>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+    sudo apt-get install blueman
 
+Add the following to the beginning of /etc/bluetooth/main.conf:
 
+.. code-block:: bash
 
-
-
-
-
-
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2019, Adriaan de Beer.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/index.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
-
+    [General]
+    Disable=headset
+    Disable=handsfree
     
+    # Automatically connect both A2DP and HFP/HSP profiles for incoming
+    # connections. Some headsets that support both profiles will only connect the
+    # other one automatically so the default setting of true is usually a good
+    # idea.
+    AutoConnect=true
 
-    
-  </body>
-</html>
+
+
+Chrome
+------
+.. code-block:: bash
+
+    sudo apt-get install libxss1 libappindicator1 libindicator7
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo apt install ./google-chrome*.deb
+
+Slack
+-----
+.. code-block:: bash
+
+    sudo snap install slack --classic
+
+Docker
+------
+.. code-block:: bash
+
+    sudo apt-get update
+    sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    if ! [[ $(sudo apt-key fingerprint 0EBFCD88) ]]
+    then
+            echo There seems to be a problem with the fingerprint - go to https://docs.docker.com/install/linux/docker-ce/ubuntu/
+    else
+            sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+    fi
+
+    sudo apt-get install docker-ce docker-ce-cli containerd.io
+    sudo groupadd docker
+    sudo usermod -aG docker $USER
+
+    # Run test
+    docker run hello-world
+
+OpenVPN
+-------
+.. code-block:: bash
+
+    sudo apt install openvpn
+
+TeamViewer
+----------
+.. code-block:: bash
+
+    wget https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
+    sudo apt install ./teamviewer_amd64.deb
+
+Pip
+---
+.. code-block:: bash
+
+    sudo apt install python3-pip
+    echo alias pip=\"pip3\" >> ~/.bash_aliases
+
+Ansible
+-------
+.. code-block:: bash
+
+    sudo apt-add-repository --yes --update ppa:ansible/ansible
+    sudo apt-get install ansible
+
+Samba Client
+------------
+.. code-block:: bash
+
+    sudo apt install smbclient
+
+Helm
+----
+.. code-block:: bash
+
+    curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+
+SSH
+---
+After creating id_rsa you need to add it:
+
+.. code-block:: bash
+
+    ssh-keygen -t rsa -b 4096 -C "email@example.com"
+    # let's say you created id_rsa, now add it to SSH
+    ssh-add ~/.ssh/id_rsa
+
+7z Archiver
+-----------
+.. code-block:: bash
+
+    sudo apt install p7zip-full p7zip-rar
+    # usage:
+    7z e file.7z
+
+
